@@ -816,6 +816,7 @@ class Conv1D(nn.Module):
         self.bias = nn.Parameter(torch.zeros(nf))
 
     def forward(self, x):
+        torch.nn.modules.utils.log_ranges(self, x, self.weight, self.bias)
         size_out = x.size()[:-1] + (self.nf,)
         x = torch.addmm(self.bias, x.view(-1, x.size(-1)), self.weight)
         x = x.view(*size_out)
